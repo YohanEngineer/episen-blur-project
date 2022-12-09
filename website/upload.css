@@ -1,0 +1,15 @@
+#upload {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    cursor: pointer;
+}
+
+#center {
+    width: 50%;
+    /* Largeur de la div */
+    margin-left: 33%;
+    margin-top: 20%;
+}
