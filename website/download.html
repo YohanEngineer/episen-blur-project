@@ -15,25 +15,63 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Liste déroulante
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li class="dropdown-item">TEST</li>
-        </ul>
+    <div class="dropdown dropdown-menu-center">
+        <select id="list" class="btn btn-dark btn-lg dropdown-toggle" name="building" required>
+            <option value="" selected>Select your file</option>
+            </option>
+        </select>
     </div>
+    <button id="download">Download</button>
+
     <script>
-        var items = ["item 1", "item 2", "item 3"];
-        var dropdown = document.getElementsByClassName("dropdown-menu")[0];
-        var html = "";
-        for (var i = 0; i < items.length; i++) {
-            html += "<li class='dropdown-item'>" + items[i] + "</li>";
-        }
+        let selected_image = ""
+        $.ajax({
+            url: 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search',
+            type: 'GET',
+            dataType: 'json',
+            success: function (files) {
+                console.log(files);
+                console.log(files['list'])
+                for (let i = 0; i < files['list'].length; i++) {
+                    document.getElementById("list").innerHTML += '<option value="' + files['list'][i] + '">' + files['list'][i] + '</option>'
+                }
+            }
+        });
+
+        document.getElementById("list").addEventListener('click', function () {
+            selected_image = document.getElementById("list").options[list.options.selectedIndex].value;
+            console.log(selected_image);
+        });
+
+        document.getElementById("download").addEventListener('click', function () {
+            url = 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search/?file=' + selected_image
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    var blob = new Blob([data], { type: "application/octetstream" });
+                    //Check the Browser type and download the File.
+                    var isIE = false || !!document.documentMode;
+                    if (isIE) {
+                        window.navigator.msSaveBlob(blob, fileName);
+                    } else {
+                        var url = window.URL || window.webkitURL;
+                        link = url.createObjectURL(blob);
+                        var a = $("<a />");
+                        a.attr("download", selected_image);
+                        a.attr("href", link);
+                        $("body").append(a);
+                        a[0].click();
+                        $("body").remove(a);
+                    }
+                }
+            });
+        });
+
     </script>
 </body>
 
