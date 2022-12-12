@@ -17,27 +17,46 @@ document.getElementById("list").addEventListener('click', function () {
     console.log(selected_image);
 });
 
+function downloadFile(data, name) {
+    const blob = new Blob([data], {type: "octet-stream"});
+    console.log(blob);
+    const href = new createObjectURL(blob);
+    const a = Object.assign(document.createElement('a'), {
+        href,
+        style : "display:None",
+        download : name
+    });
+
+    a.click();
+    URL.revokeObjectURL(href)
+}
+
+
 document.getElementById("download").addEventListener('click', function () {
     url = 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search/?file=' + selected_image
     $.ajax({
         url: url,
         type: 'GET',
         success: function (data) {
-            var blob = new Blob([data], { type: "application/jpg" });
-            //Check the Browser type and download the File.
-            var isIE = false || !!document.documentMode;
-            if (isIE) {
-                window.navigator.msSaveBlob(blob, fileName);
-            } else {
-                var url = window.URL || window.webkitURL;
-                link = url.createObjectURL(blob);
-                var a = $("<a />");
-                a.attr("download", selected_image);
-                a.attr("href", link);
-                $("body").append(a);
-                a[0].click();
-                $("body").remove(a);
-            }
+            //https://codepen.io/shospodarets/pen/emWmBz
+            // var blob = new Blob([data], { type: "application/octet-stream" });
+            // //Check the Browser type and download the File.
+            // var isIE = false || !!document.documentMode;
+            // if (isIE) {
+            //     window.navigator.msSaveBlob(blob, fileName);
+            // } else {
+            //     var url = window.URL || window.webkitURL;
+            //     link = url.createObjectURL(blob);
+            //     var a = $("<a />");
+            //     a.attr("download", selected_image);
+            //     a.attr("href", link);
+            //     $("body").append(a);
+            //     a[0].click();
+            //     $("body").remove(a);
+            // }
+            downloadFile(data, selected_image)
         }
     });
 });
+
+
