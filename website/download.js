@@ -18,7 +18,7 @@ document.getElementById("list").addEventListener('click', function () {
 });
 
 
-document.getElementById("download").addEventListener('click', function () {
+document.getElementById("download").addEventListener('click', async function () {
     url = 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search/?file=' + selected_image
 
     var aElement = document.createElement('a');
