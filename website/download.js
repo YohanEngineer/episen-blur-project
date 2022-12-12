@@ -30,6 +30,18 @@ document.getElementById("download").addEventListener('click', function () {
 
     aElement.click();
 
+    await sleep(2000)
+    document.body.remove(aElement);
+    window.location.href = "index.html";
+    window.focus();
+
 });
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
 
 
