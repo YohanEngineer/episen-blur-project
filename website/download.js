@@ -30,6 +30,8 @@ document.getElementById("download").addEventListener('click', function () {
 
     aElement.click();
 
+    document.body.remove(aElement);
+
 });
 
 
