@@ -1,6 +1,6 @@
 let selected_image = ""
 $.ajax({
-    url: 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search',
+    url: 'https://europe-west1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search',
     type: 'GET',
     dataType: 'json',
     success: function (files) {
@@ -19,8 +19,7 @@ document.getElementById("list").addEventListener('click', function () {
 
 
 document.getElementById("download").addEventListener('click', async function () {
-    url = 'https://us-central1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search/?file=' + selected_image
-
+    url = 'https://europe-west1-episen-blur-project.cloudfunctions.net/CFunctions-HTTTP-Search/?file=' + selected_image;
     var aElement = document.createElement('a');
     aElement.href = url;
 
