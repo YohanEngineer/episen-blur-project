@@ -24,7 +24,7 @@ document.getElementById("download").addEventListener('click', function () {
     var aElement = document.createElement('a');
     aElement.href = url;
 
-    aElement.download = 'image.jpg';
+    aElement.download = selected_image;
 
     document.body.appendChild(aElement);
 
